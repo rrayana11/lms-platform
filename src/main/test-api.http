@@ -1,0 +1,72 @@
+### Получить всех пользователей
+GET http://localhost:8080/api/users
+Authorization: Basic dXNlcjoxMjM=
+
+###
+
+### Создать пользователя 1
+POST http://localhost:8080/api/users
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM=
+
+{
+  "username": "ivan_petrov",
+  "email": "ivan@example.com",
+  "password": "password123"
+}
+
+###
+
+### Создать пользователя 2
+POST http://localhost:8080/api/users
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM=
+
+{
+  "username": "maria_sidorova",
+  "email": "maria@example.com",
+  "password": "password456"
+}
+
+###
+
+### Создать пользователя 3
+POST http://localhost:8080/api/users
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM=
+
+{
+  "username": "alexey_ivanov",
+  "email": "alexey@example.com",
+  "password": "password789"
+}
+
+###
+
+### Создать курс 1
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM=
+
+{
+  "title": "Java для начинающих",
+  "description": "Основы программирования на Java"
+}
+
+###
+
+### Создать курс 2
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM=
+
+{
+  "title": "Spring Boot",
+  "description": "Разработка веб-приложений на Spring Boot"
+}
+
+###
+
+### Получить все курсы
+GET http://localhost:8080/api/courses
+Authorization: Basic dXNlcjoxMjM=

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация - LMS Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.2);
+        }
+        .btn-check:checked + .btn-outline-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: transparent;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-mortarboard-fill" style="font-size: 3rem; color: #667eea;"></i>
+                        <h2 class="fw-bold mt-2">Создать аккаунт</h2>
+                        <p class="text-muted">Присоединяйтесь к LMS Platform</p>
+                    </div>
+
+                    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+                    <form th:action="@{/register}" method="post" th:object="${user}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Имя пользователя</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" class="form-control" id="username"
+                                       th:field="*{username}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control" id="email"
+                                       th:field="*{email}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Пароль</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control" id="password"
+                                       th:field="*{password}" required minlength="6">
+                            </div>
+                            <small class="text-muted">Минимум 6 символов</small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Тип аккаунта</label>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <input type="radio" class="btn-check" name="role" id="roleStudent"
+                                           value="STUDENT" th:field="*{role}" checked>
+                                    <label class="btn btn-outline-primary w-100 py-3" for="roleStudent">
+                                        <i class="bi bi-person-fill d-block mb-2" style="font-size: 2rem;"></i>
+                                        <strong>Студент</strong>
+                                        <small class="d-block text-muted">Проходить курсы</small>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="radio" class="btn-check" name="role" id="roleInstructor"
+                                           value="INSTRUCTOR" th:field="*{role}">
+                                    <label class="btn btn-outline-primary w-100 py-3" for="roleInstructor">
+                                        <i class="bi bi-mortarboard-fill d-block mb-2" style="font-size: 2rem;"></i>
+                                        <strong>Преподаватель</strong>
+                                        <small class="d-block text-muted">Создавать курсы</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 mb-3"
+                                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+                            <i class="bi bi-person-plus me-2"></i>Зарегистрироваться
+                        </button>
+
+                        <div class="text-center">
+                            <p class="mb-0">Уже есть аккаунт?
+                                <a th:href="@{/login}" class="text-decoration-none fw-bold">Войти</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

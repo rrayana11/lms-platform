@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Platform - Онлайн обучение</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .navbar { background-color: #1e1e1e !important; padding: 1rem 0; }
+        .hero-section {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 60px;
+        }
+        .hero-title { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .hero-subtitle { font-size: 1.25rem; opacity: 0.9; margin-bottom: 2rem; }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            height: 100%;
+        }
+        .feature-icon { font-size: 2.5rem; color: #667eea; margin-bottom: 1rem; }
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            height: 100%;
+        }
+        .course-image {
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        .footer {
+            background-color: #1e1e1e;
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">
+            <i class="bi bi-mortarboard-fill me-2"></i>LMS Platform
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/courses}">
+                        <i class="bi bi-book me-1"></i>Курсы
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('INSTRUCTOR')">
+                    <a class="nav-link" th:href="@{/dashboard}">
+                        <i class="bi bi-graph-up me-1"></i>Дашборд
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link" th:href="@{/login}">Войти</a>
+                </li>
+                <li class="nav-item ms-2" sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-outline-light" th:href="@{/register}">Регистрация</a>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i>
+                        <span sec:authentication="name">Пользователь</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" th:href="@{/profile}">
+                            <i class="bi bi-person me-2"></i>Личный кабинет
+                        </a></li>
+                        <li sec:authorize="hasRole('STUDENT')">
+                            <a class="dropdown-item" th:href="@{/my-courses}">
+                                <i class="bi bi-book me-2"></i>Мои курсы
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('INSTRUCTOR')">
+                            <a class="dropdown-item" th:href="@{/dashboard}">
+                                <i class="bi bi-graph-up me-2"></i>Дашборд
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="dropdown-item text-danger">Выйти</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title">Учись у лучших экспертов</h1>
+                <p class="hero-subtitle">
+                    Современная платформа для онлайн-обучения.
+                    Открой для себя тысячи курсов от профессионалов индустрии.
+                    Начни свой путь к новой карьере уже сегодня!
+                </p>
+                <div class="d-flex gap-3">
+                    <a th:href="@{/courses}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-search me-2"></i>Найти курс
+                    </a>
+                    <a th:href="@{/register}" class="btn btn-outline-light btn-lg" sec:authorize="!isAuthenticated()">
+                        Начать бесплатно
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center d-none d-lg-block">
+                <i class="bi bi-mortarboard" style="font-size: 15rem; opacity: 0.3;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<div class="container mb-5">
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <i class="bi bi-book feature-icon"></i>
+                <h4 class="fw-bold mb-3">1000+ Курсов</h4>
+                <p class="text-muted">Широкий выбор курсов по программированию, дизайну, бизнесу и многим другим направлениям</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <i class="bi bi-people feature-icon"></i>
+                <h4 class="fw-bold mb-3">50K+ Студентов</h4>
+                <p class="text-muted">Присоединяйся к нашему сообществу и учись вместе с тысячами студентов</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card text-center">
+                <i class="bi bi-award feature-icon"></i>
+                <h4 class="fw-bold mb-3">Сертификаты</h4>
+                <p class="text-muted">Получай сертификаты после успешного завершения каждого курса</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Courses -->
+    <h2 class="fw-bold mb-4">Популярные курсы</h2>
+    <div class="row g-4" th:if="${courses != null and !courses.isEmpty()}">
+        <div class="col-md-4" th:each="course : ${courses}">
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="bi bi-laptop"></i>
+                </div>
+                <div class="p-4">
+                    <h5 class="fw-bold mb-2" th:text="${course.title}">Название курса</h5>
+                    <p class="text-muted mb-3" th:text="${course.description}">Описание</p>
+                    <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-primary w-100">
+                        Подробнее <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center py-5" th:if="${courses == null or courses.isEmpty()}">
+        <i class="bi bi-inbox" style="font-size: 5rem; color: #ccc;"></i>
+        <h3 class="mt-3">Курсы скоро появятся</h3>
+        <p class="text-muted">Мы готовим для вас интересные курсы</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container text-center">
+        <p class="mb-0">&copy; 2026 LMS Platform. Все права защищены.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
