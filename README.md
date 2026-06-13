@@ -55,43 +55,6 @@ com.lms
 └── SecurityConfig       # Конфигурация безопасности
 ```
 
-##  ER-диаграмма базы данных
-
-```
-┌─────────────────┐       ┌─────────────────┐
-│     users       │       │     courses     │
-├─────────────────┤       ├─────────────────┤
-│ id (PK)         │       │ id (PK)         │
-│ username        │       │ title           │
-│ email           │       │ description     │
-│ password        │       │ created_at      │
-│ role            │       │ updated_at      │
-│ created_at      │       └─────────────────┘
-│ updated_at      │                │
-└─────────────────┘                │
-        │                          │
-        ▼                          ▼
-┌─────────────────┐       ┌─────────────────┐
-│   enrollments   │       │    sections     │
-├─────────────────┤       ├─────────────────┤
-│ id (PK)         │       │ id (PK)         │
-│ user_id (FK)    │       │ title           │
-│ course_id (FK)  │       │ description     │
-│ enrolled_at     │       │ order_index     │
-│ progress        │       │ course_id (FK)  │
-│ completed       │       └─────────────────┘
-└─────────────────┘                │
-                                   ▼
-                          ┌─────────────────┐
-                          │     lessons     │
-                          ├─────────────────┤
-                          │ id (PK)         │
-                          │ title           │
-                          │ content         │
-                          │ lesson_type     │
-                          │ section_id (FK) │
-                          └─────────────────┘
-```
 Инструкция по запуску
 
  Предварительные требования:
